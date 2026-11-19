@@ -1,0 +1,7 @@
+.git
+.github-token
+agent/data
+**/__pycache__
+**/node_modules
+.venv
+*.pyc

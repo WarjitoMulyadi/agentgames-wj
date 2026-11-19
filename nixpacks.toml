@@ -1,6 +1,10 @@
 # WJ-ARGUS needs BOTH runtimes: Python (FastAPI/uvicorn) serves the app,
 # Node (snarkjs) runs as a subprocess for Groth16 proving.
-providers = ["python", "node"]
+# NOTE: only the python provider is listed — the "node" provider pulls
+# nodejs_18 + corepack, which conflicts with the nodejs_20 nix package
+# below (build failed on duplicate corepack files, 2026-11-19). Node 20
+# (with its bundled npm) comes from nixPkgs instead: exactly one Node.
+providers = ["python"]
 
 [phases.setup]
 nixPkgs = ["python311", "nodejs_20"]

@@ -7,7 +7,10 @@
 providers = ["python"]
 
 [phases.setup]
-nixPkgs = ["python311", "nodejs_20"]
+# python311Packages.pip is required explicitly: overriding nixPkgs drops
+# the python provider's default pip, and the bare nix python311 has no
+# pip module (build failed "No module named pip", 2026-11-19).
+nixPkgs = ["python311", "python311Packages.pip", "nodejs_20"]
 
 # Root requirements.txt mirrors agent/requirements.txt so the python
 # provider installs the app deps; the prover's npm deps are installed

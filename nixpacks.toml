@@ -1,0 +1,18 @@
+# WJ-ARGUS needs BOTH runtimes: Python (FastAPI/uvicorn) serves the app,
+# Node (snarkjs) runs as a subprocess for Groth16 proving.
+providers = ["python", "node"]
+
+[phases.setup]
+nixPkgs = ["python311", "nodejs_20"]
+
+# Root requirements.txt mirrors agent/requirements.txt so the python
+# provider installs the app deps; the prover's npm deps are installed
+# into agent/prover/node_modules (present at runtime for prove.js).
+[phases.install]
+cmds = [
+  "python -m pip install -r requirements.txt",
+  "npm --prefix agent/prover ci"
+]
+
+[start]
+cmd = "cd agent && uvicorn app.main:app --host 0.0.0.0 --port $PORT"

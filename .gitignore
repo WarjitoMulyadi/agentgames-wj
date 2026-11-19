@@ -1,0 +1,6 @@
+.env
+.env.strategy
+agent/data/
+agent/.venv/
+**/node_modules/
+__pycache__/
